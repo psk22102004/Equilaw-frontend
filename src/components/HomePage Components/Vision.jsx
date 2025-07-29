@@ -1,17 +1,35 @@
-import React from 'react'
-import vision from '/vision.png'
-function Vision(props) {
-    return (
-        <div className='flex md:mx-5 items-center'>
-            <div className="flex flex-col  gap-3 md:gap-6 items-center w-full  md:px-5 py-5 md:max-w-md lg:max-w-xl ">
-                <img src={props.img} className='w-14 md:w-24' />
-                <h1 className=' text-lg md:text-2xl font-bold font-poppins'>{props.title}</h1>
-                <p className='text-sm  text-center md:px-10   '>{props.info} </p>
+import React from 'react';
 
-            </div>
+function Vision({ img, title, info, reverse = false }) {
+  return (
+    <div className="containerw-full mx-auto px-8 py-20">
+      <div
+        className={` ${
+          reverse ? 'lg:[&>*:first-child]:order-2' : ''
+        }`}
+      >
+        {/* Image + Title */}
+        <div className="flex flex-col items-center justify-center lg:items-start space-y-8">
+          <div className="w-20 h-20 lg:w-24 lg:h-24 flex items-center justify-center bg-blue-600/20 rounded-full p-4">
+            <img 
+              src={img} 
+              alt={title} 
+              className="w-full h-full object-contain filter brightness-0 invert opacity-80" 
+            />
+          </div>
+          <h2 className="text-4xl lg:text-6xl font-bold text-white text-center lg:text-left leading-tight font-playfair">
+            {title}
+          </h2>
+     
+
+        {/* Info Text */}
+        <div className="text-white/80 text-center lg:text-left text-lg lg:text-xl leading-relaxed font-light max-w-lg mx-auto lg:mx-0">
+          {info}
         </div>
-
-    );
-
+      </div>
+         </div>
+    </div>
+  );
 }
-export default Vision
+
+export default Vision;

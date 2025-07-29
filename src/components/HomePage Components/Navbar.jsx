@@ -8,7 +8,7 @@ function Navbar(props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleClick = () => {
-    navigate(props.buttonLink);
+    navigate('/signup');
   };
 
   return (

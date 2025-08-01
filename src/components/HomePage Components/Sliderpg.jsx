@@ -45,7 +45,7 @@ export default function Sliderpg() {
                             </p>
                             <div className="flex-1 min-h-0">
                                 <img 
-                                    src="/dashboard.png" 
+                                    src="/new-dashboard.png" 
                                     alt="Interactive Dashboard" 
                                     className="w-full h-full object-cover rounded-lg border border-gray-200"
                                 />
@@ -70,7 +70,7 @@ export default function Sliderpg() {
                             </p>
                             <div className="flex-1 min-h-0">
                                 <img 
-                                    src="/dashboard.png" 
+                                    src="/case-chat.png" 
                                     alt="Case Analytics" 
                                     className="w-full h-full object-cover rounded-lg border border-gray-200"
                                 />

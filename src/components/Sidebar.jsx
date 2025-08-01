@@ -31,9 +31,9 @@ const Sidebar = ({ hideSidebar }) => {
         <nav className="flex-1">
           <ul className="space-y-2 items-center text-center ">
            <div className=''> {[
-              { icon: <Home className="h-6 w-6 text-blue-600 bg-blue-600/20 p-1 rounded" />, label: 'Home', to: '/user' },
-              { icon: <MessageSquare className="h-6 w-6 text-blue-600 bg-blue-600/20 p-1 rounded" />, label: 'AI Chat', to: '/user/AI' },
-              { icon: <FileText className="h-6 w-6 text-blue-600 bg-blue-600/20 p-1 rounded" />, label: 'Case Search', to: '/user/vectorsearch' },
+              { icon: <Home className="h-7 w-7 text-blue-600 bg-blue-600/20 p-1 rounded" />, label: 'Home', to: '/user' },
+              { icon: <MessageSquare className="h-7 w-7 text-blue-600 bg-blue-600/20 p-1 rounded" />, label: 'AI Chat', to: '/user/AI' },
+              { icon: <FileText className="h-7 w-7 text-blue-600 bg-blue-600/20 p-1 rounded" />, label: 'Case Search', to: '/user/vectorsearch' },
             ].map((item, index) => (
               <li key={index} className='items-center text-center '>
                 <Link

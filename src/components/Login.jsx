@@ -2,12 +2,13 @@ import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { authContext } from "../contexts/AuthContext";
 import { loadingContext } from "../contexts/LoadingContext";
-import { FaEnvelope, FaLock } from "react-icons/fa";
-// import { motion } from "framer-motion";
+import { MailIcon } from "lucide-react";
+import { LockClosedIcon } from "@radix-ui/react-icons";
+import { ArrowRightIcon } from "@radix-ui/react-icons";
 
 export default function Login() {
-  const {login} = useContext(authContext);
-  const {loading , setLoading , error , setError} = useContext(loadingContext);
+  const { login } = useContext(authContext);
+  const { loading, setLoading, error, setError } = useContext(loadingContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,140 +20,111 @@ export default function Login() {
     if (success) {
       navigate("/user");
     } else {
-      console.log("Error:",error);
+      console.log("Error:", error);
     }
   };
 
-  if(loading){
-    return <h1>Loading...</h1>
-  }
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white relative font-raleway">
-      
-      {/* Loader with Framer Motion */}
-      {loading && (
-        <div
-          className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center z-20"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          <div
-            className="w-16 h-16 border-4 border-t-4 border-t-[#0d647d] border-gray-400 rounded-full"
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-          />
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="bg-white p-8 rounded-2xl shadow-lg">
+          <div className="flex items-center justify-center space-x-2">
+            <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+            <p className="text-lg text-gray-700">Loading...</p>
+          </div>
         </div>
-      )}
+      </div>
+    );
+  }
 
-      {/* Login Card with Fade-in Animation */}
-      <div
-        className="container mx-auto h-full bg-gray-800 rounded-lg shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-      >
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-6xl bg-white rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-2">
         
         {/* Left Side - Form */}
-        <div className="p-10 flex flex-col justify-center">
-          <h1
-            className="text-4xl font-bold text-[#0d647d] mb-6 text-center"
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            Login
-          </h1>
- 
-          <form onSubmit={handleLogin} className="space-y-6">
-            
-            {/* Email Field */}
-            <div
-              className="relative"
-              initial={{ x: -30, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-              <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full pl-10 p-3 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-[#0d647d] outline-none transition-all"
-              />
+        <div className="p-8 lg:p-12 flex flex-col justify-center">
+          <div className="max-w-md mx-auto w-full">
+            {/* Header */}
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-200 rounded-full mb-4">
+                <svg className="text-blue-600 w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2 font-playfair">Login</h1>
+              <p className="text-gray-600">Welcome back to Equilaw. Let's continue building.</p>
             </div>
 
-            {/* Password Field */}
-            <div
-              className="relative"
-              initial={{ x: -30, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full pl-10 p-3 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-[#0d647d] outline-none transition-all"
-              />
-            </div>
+            {/* Form */}
+            <form onSubmit={handleLogin} className="space-y-6">
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full bg-[#00c5e5] hover:bg-[#0d647d] text-white py-3 rounded-lg transition-all"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-            >
-              Login
-            </button>
+              <div className="relative">
+                <MailIcon className="w-4 h-4 text-blue-600 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                />
+              </div>
 
-            {error && (
-              <p
-                className="text-red-500 text-sm"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.6 }}
+              <div className="relative">
+                <LockClosedIcon className="w-4 h-4 text-blue-600 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition-all duration-200 flex items-center justify-center"
               >
-                {error}
-              </p>
-            )}
-          </form>
+                Login <ArrowRightIcon className="inline-block ml-2 w-4 h-4" />
+              </button>
 
-          <div
-            className="text-center mt-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-          >
-            <p className="text-sm text-gray-400">
-              Don't have an account?{" "}
-              <Link to="/signup" className="text-[#0d647d] hover:underline">
-                Signup
-              </Link>
-            </p>
+              {error && (
+                <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
+                  {error}
+                </div>
+              )}
+            </form>
+
+            {/* Footer */}
+            <div className="text-center mt-6">
+              <p className="text-gray-600 text-sm">
+                Don't have an account?{" "}
+                <Link to="/signup" className="text-blue-600 hover:text-blue-700 font-medium">
+                  Sign Up
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Right Side - Info Section */}
-        <div
-          className="hidden md:flex flex-col justify-center items-center bg-gradient-to-r from-[#009dc0]  to-[#0d647d] text-white p-10"
-          initial={{ x: 30, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.7 }}
-        >
-          <h2 className="text-4xl font-bold">Welcome Back!</h2>
-          <p className="text-lg mt-4 text-center leading-relaxed">
-            Let's get back to work and continue building your resume.
-          </p>
+        <div className="bg-blue-600/60 from-white to-blue-100 p-8 lg:p-12 flex flex-col justify-center text-white relative overflow-hidden">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-32 translate-x-32"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-white-600 rounded-full translate-y-24 -translate-x-24"></div>
+          </div>
+
+          <div className="relative z-10 max-w-md mx-auto text-center lg:text-left">
+            <img src="/new-logo.svg" className="w-32 h-16 mb-6" />
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4 leading-tight font-playfair text-black">
+              Your digital legal partner.
+            </h2>
+            <p className="text-blue-100 text-lg leading-relaxed">
+              Resume your legal research, simplify document access, and pick up where you left off.
+            </p>
+          </div>
         </div>
       </div>
     </div>

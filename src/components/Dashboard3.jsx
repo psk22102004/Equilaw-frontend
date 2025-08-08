@@ -2,11 +2,8 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import CaseCarousel from './CaseCarousel';
-import { PlusCircle } from 'lucide-react';
-import wave from '../img/wave.png'
-
-
-
+import { Progress } from "@/components/ui/progress"
+import WelcomeContainer from './WelcomeContainer';
 
 const Dashboard3 = () => {
     const navigate = useNavigate();
@@ -17,17 +14,16 @@ const Dashboard3 = () => {
         { id: 3, imgSrc: '/salary.png', title: 'Number of Hearings', value: '14' },
 
     ]
-
     const [casesData, setCasesData] = useState([
     ]);
 
-    //useEffect to fetch all cases data from backend
+   
     useEffect(
         () => {
             const fetchCases = async () => {
                 const response = await axios.get('https://sih-backend-2t3a.onrender.com/cases/all');
-                console.log('fetched cases are : ', response.data); //cases fetched , now set them in setCasesData
-                //response.data is also an array of objects , so you need to spread it , if u want to include the example cases as well. If you directly wanna replace it then just use response.data
+                console.log('fetched cases are : ', response.data); 
+             
                 setCasesData(
                     (prev) => {
                         return ([...prev, ...response.data])
@@ -43,74 +39,104 @@ const Dashboard3 = () => {
 
 
     return (
-        <div className=" mt-16 md:mt-0 h-screen ">
-            <main className="p-4 md:p-8 overflow-auto space-y-12 bg-gray-100 text-black">
+        <div className="mt-16 md:mt-0 h-screen font-poppins">
+            <main className="p-4 md:p-8 overflow-auto space-y-12 bg-gray-50 text-black">
 
-                {/* WELCOME TITLE STARTS */}
-                <div className='welcomeTitle  flex justify-between shadow-2xl  '>
-                    <div className='greetingBox  border flex flex-col w-full mx-auto relative space-y-4 p-8  shadow-lg hover:shadow-xl rounded-xl bg-white bg-gradient-to-r from-white to-blue-200 '>
-                        <h1 className='text-xl md:text-3xl font-semibold   '>Welcome back!</h1>
-                        <div className='flex gap-x-3 items-center'>
-                            <h1 className='text-2xl md:text-4xl font-bold  '>John Doe</h1>
-                            <img src={wave} />
-                        </div>
-                        <p className='hidden md:block font-semibold  '>Explore your cases, important updates, and resources to assist you.</p>
-                        {/* <img className='h-60 w-60 absolute right-12 bottom-0 ' src='/doctorIllustration.png' /> */}
-                        <img className='hidden md:block w-56 absolute right-0 md:right-20 bottom-0  ' src='/justice.png' />
-                    </div>
-                </div>
-                {/* WELCOME TITLE ENDS */}
 
-                {/* STATISTICS CARDS START */}
-                <div className='statisticCardBox grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 '>
+                <WelcomeContainer/>
+                <div className='statisticCardBox grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
                     {
                         features.map(
                             (ele, index) => (
-                                <div className='feature  shadow-lg hover:shadow-xl shadow-gray-00  bg-white  p-3 md:p-6 flex space-x-5 md:space-x-10 rounded-xl '>
-                                    <img src={ele.imgSrc} className='h-12 w-12 md:h-20 md:w-20 rounded-full border border-gray-300  bg-white p-1 ' />
-                                    <div className='flex flex-col space-y-3 '>
-                                        <p className='text-lg md:text-xl font-semibold'>{ele.title}</p>
-                                        {(ele.id == 1 || ele.id == 2 || ele.id == 3) && <h1 className=' text-xl font-bold md:text-3xl'> {ele.value} </h1>}
-
-
+                                <div key={ele.id} className='feature bg-white rounded-lg border border-gray-200 p-6'>
+                                    <div className="flex items-start justify-between">
+                                        <div className="flex items-center">
+                                            <div className="p-2 bg-gray-50 rounded-lg mr-4">
+                                                <img 
+                                                    src={ele.imgSrc} 
+                                                    className='w-6 h-6' 
+                                                    alt={ele.title}
+                                                />
+                                            </div>
+                                            <div>
+                                                <p className='text-sm font-medium text-gray-600'>{ele.title}</p>
+                                                {(ele.id == 1 || ele.id == 2 || ele.id == 3) && (
+                                                    <p className='text-2xl font-semibold text-gray-900 mt-1'>{ele.value}</p>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
+                                    
+                                    {(ele.id == 1 || ele.id == 2 || ele.id == 3) && (
+                                        <div className="mt-4">
+                                            <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
+                                                <span>Progress</span>
+                                                <span>{Math.min(parseInt(ele.value) * 2, 100)}%</span>
+                                            </div>
+                                            <Progress value={Math.min(parseInt(ele.value) * 2, 100)} className="h-1.5"/>
+                                        </div>
+                                    )}
                                 </div>
                             )
                         )
                     }
                 </div>
-                {/* STATISTICS CARDS END */}
-
-
-                {/* ONGOING CASES START */}
-                <div className='flex flex-col  px-1 '>
-                    <div className=' flex flex-col place-items-center lg:flex-row gap-3 md:flex-row md:justify-between'>
-                        <h1 className='text-2xl text-center md:text-3xl font-semibold '>Ongoing Cases</h1>
-                        <div className=' mt-2 flex gap-3'>
-                            <button className=' bg-blue-600 hover:bg-blue-800 active:bg-blue-700 text-white font-semibold px-3 md:px-6 py-2 rounded-lg' onClick={() => navigate('/user/addCase')}>Add Case</button>
-                            <button className='bg-blue-600 hover:bg-blue-800 active:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg' onClick={() => navigate('/user/viewAllopen', { state: { cases: openCases } })} >  View all </button></div>
+            
+           
+                <div className='flex flex-col px-1'>
+                    <div className='flex flex-col place-items-center lg:flex-row gap-3 md:flex-row md:justify-between mb-6'>
+                        <div>
+                            <h1 className='text-xl font-semibold text-gray-900'>Ongoing Cases</h1>
+                            <p className="text-sm text-gray-600 mt-1">Cases currently in progress</p>
+                        </div>
+                        <div className='mt-2 flex gap-3'>
+                            <button 
+                                className='inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors' 
+                                onClick={() => navigate('/user/addCase')}
+                            >
+                                Add Case
+                            </button>
+                            <button 
+                                className='inline-flex items-center px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors' 
+                                onClick={() => navigate('/user/viewAllopen', { state: { cases: openCases } })}
+                            >
+                                View all ({openCases.length})
+                            </button>
+                        </div>
                     </div>
-                    <div className='caseCarousel flex '>
-                        <CaseCarousel cardData={openCases} />
+                    <div className='caseCarousel flex'>
+                        <div className="bg-white rounded-lg border border-gray-200 w-full">
+                            <CaseCarousel cardData={openCases} />
+                        </div>
                     </div>
                 </div>
                 {/* ONGOING CASES END */}
 
                 {/* CLOSED CASES START */}
-                <div className='flex flex-col  px-1 '>
-                    <div className='flex flex-col place-items-center lg:flex-row gap-3 md:flex-row md:justify-between'>
-                        <h1 className='text-2xl text-center md:text-3xl font-semibold '>Closed Cases</h1>
+                <div className='flex flex-col px-1'>
+                    <div className='flex flex-col place-items-center lg:flex-row gap-3 md:flex-row md:justify-between mb-6'>
                         <div>
-
-                            <button className='bg-blue-600 hover:bg-blue-800 active:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg' onClick={() => navigate('/user/viewAllopen', { state: { cases: closedCases } })} >  View all </button></div>
+                            <h1 className='text-xl font-semibold text-gray-900'>Closed Cases</h1>
+                            <p className="text-sm text-gray-600 mt-1">Successfully resolved matters</p>
+                        </div>
+                        <div>
+                            <button 
+                                className='inline-flex items-center px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors' 
+                                onClick={() => navigate('/user/viewAllopen', { state: { cases: closedCases } })}
+                            >
+                                View all ({closedCases.length})
+                            </button>
+                        </div>
                     </div>
-                    <div className='caseCarousel flex '>
-                        <CaseCarousel cardData={closedCases} />
+                    <div className='caseCarousel flex'>
+                        <div className="bg-white rounded-lg border border-gray-200 w-full">
+                            <CaseCarousel cardData={closedCases} />
+                        </div>
                     </div>
                 </div>
-                {/* CLOSED CASES END */}
-            </main >
-        </div >
+           
+            </main>
+        </div>
     )
 }
 

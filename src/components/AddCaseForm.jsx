@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import WelcomeContainer from './WelcomeContainer';
 
 export function AddCaseForm() {
   const navigate = useNavigate();
@@ -45,106 +47,113 @@ export function AddCaseForm() {
   };
 
   return (
-    <div className='  md:flex mx-auto items-center bg-backg p-6 '>
+    <div className='min-h-screen  md:flex flex-col mx-auto p-6 font-poppins bg-gray-50'>
+      <WelcomeContainer />
       <form
         onSubmit={handleSubmit}
-        className=" md:space-y-8 max-w-sm  w-full md:max-w-4xl mx-auto  md:p-8 bg-white shadow-lg rounded-xl"
+        className="md:space-y-8 max-w-sm w-full md:max-w-4xl mx-auto md:p-8  "
       >
-        <h1 className='hidden md:block mb-0 text-xl md:text-3xl font-bold font-poppins text-center  md:mb-8'>Add Case Details</h1>
+      <div className='flex items-center gap-2'><ArrowLeft className="font-bold " onClick={()=>navigate('/user')}/> <h1 className='text-2xl font-semibold'>Case Details</h1></div> 
 
-        <Card className="bg-white md:block shadow-md rounded-lg">
-          <CardHeader className="bg-blue-700 p-4 rounded-t-lg">
-            <CardTitle className="text-white text-lg font-semibold">Case Details</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6 p-6">
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-800">Case Title</label>
+        <Card className="bg-white shadow-lg rounded-xl border border-gray-200 overflow-hidden">
+         
+          <CardContent className="space-y-6 p-8 bg-gradient-to-b from-white to-gray-50/30">
+            
+            {/* Case Title */}
+            <div className="space-y-3">
+              <label className="block text-sm font-semibold text-slate-700 tracking-wide">Case Title</label>
               <Input
-                placeholder="Enter Case Title"
+                placeholder="Enter case title..."
                 value={caseDetails.title}
                 onChange={(e) => handleCaseInputChange('title', e.target.value)}
-                className="w-full rounded-lg border-gray-300 focus:border-blue-800 focus:ring-blue-800"
+                className="w-full h-12 rounded-xl border-2 border-gray-200 focus:border-slate-400 focus:ring-slate-400 transition-all duration-200 bg-white/80 backdrop-blur-sm"
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-800">Case Description</label>
+            {/* Case Description */}
+            <div className="space-y-3">
+              <label className="block text-sm font-semibold text-slate-700 tracking-wide">Case Description</label>
               <Textarea
-                placeholder="Enter Case Description"
+                placeholder="Provide detailed case description..."
                 value={caseDetails.description}
                 onChange={(e) => handleCaseInputChange('description', e.target.value)}
-                className="w-full rounded-lg border-gray-300 focus:border-blue-800 focus:ring-blue-800"
-                rows={4}
+                className="w-full rounded-xl border-2 border-gray-200 focus:border-slate-400 focus:ring-slate-400 transition-all duration-200 bg-white/80 backdrop-blur-sm resize-none"
+                rows={5}
               />
             </div>
 
+            {/* Date and Category Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-800">Issue Date</label>
+              <div className="space-y-3">
+                <label className="block text-sm font-semibold text-slate-700 tracking-wide">Issue Date</label>
                 <Input
                   type="date"
                   id='issueDate'
                   value={caseDetails.issue_date}
                   onChange={(e) => handleCaseInputChange('issue_date', e.target.value)}
-                  className="w-full rounded-lg border-gray-300 focus:border-blue-800 focus:ring-blue-800"
+                  className="w-full h-12 rounded-xl border-2 border-gray-200 focus:border-slate-400 focus:ring-slate-400 transition-all duration-200 bg-white/80 backdrop-blur-sm"
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-800">Case Category</label>
+              <div className="space-y-3">
+                <label className="block text-sm font-semibold text-slate-700 tracking-wide">Case Category</label>
                 <Input
-                  placeholder="Enter Case Category"
+                  placeholder="e.g., Civil, Criminal, Family..."
                   value={caseDetails.category}
                   onChange={(e) => handleCaseInputChange('category', e.target.value)}
-                  className="w-full rounded-lg border-gray-300 focus:border-blue-800 focus:ring-blue-800"
+                  className="w-full h-12 rounded-xl border-2 border-gray-200 focus:border-slate-400 focus:ring-slate-400 transition-all duration-200 bg-white/80 backdrop-blur-sm"
                 />
               </div>
             </div>
 
+            {/* Case ID and Judge Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-800">Case ID</label>
+              <div className="space-y-3">
+                <label className="block text-sm font-semibold text-slate-700 tracking-wide">Case ID</label>
                 <Input
-                  placeholder="Enter Case ID"
+                  placeholder="Enter unique case identifier..."
                   value={caseDetails.caseid}
                   onChange={(e) => handleCaseInputChange('caseid', e.target.value)}
-                  className="w-full rounded-lg border-gray-300 focus:border-blue-800 focus:ring-blue-800"
+                  className="w-full h-12 rounded-xl border-2 border-gray-200 focus:border-slate-400 focus:ring-slate-400 transition-all duration-200 bg-white/80 backdrop-blur-sm font-mono"
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-800">Judge Name</label>
+              <div className="space-y-3">
+                <label className="block text-sm font-semibold text-slate-700 tracking-wide">Presiding Judge</label>
                 <Input
-                  placeholder="Enter Judge Name"
+                  placeholder="Enter judge's full name..."
                   value={caseDetails.judge}
                   onChange={(e) => handleCaseInputChange('judge', e.target.value)}
-                  className="w-full rounded-lg border-gray-300 focus:border-blue-800 focus:ring-blue-800"
+                  className="w-full h-12 rounded-xl border-2 border-gray-200 focus:border-slate-400 focus:ring-slate-400 transition-all duration-200 bg-white/80 backdrop-blur-sm"
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-800">Case Status (true/false)</label>
+            {/* Status Selection */}
+            <div className="space-y-3">
+              <label className="block text-sm font-semibold text-slate-700 tracking-wide">Case Status</label>
               <select
                 value={caseDetails.status}
                 onChange={(e) => handleCaseInputChange('status', e.target.value)}
-                className="w-full rounded-lg border-gray-300 focus:border-blue-800 focus:ring-blue-800"
+                className="w-full h-12 rounded-xl border-2 border-gray-200 focus:border-slate-400 focus:ring-slate-400 transition-all duration-200 bg-white/80 backdrop-blur-sm px-4 text-slate-700 font-medium"
               >
-                <option value={null}>Select an option </option>
-                <option value={true}>True </option>
-                <option value={false}>False</option>
+                <option value="">Select case status...</option>
+                <option value={true}>Active (Open)</option>
+                <option value={false}>Closed (Resolved)</option>
               </select>
             </div>
+           <div className='flex justify-end items-end'> <Button
+          type="submit"
+          variant="default"
+          className="-mt-4 md:-mt-0 h-14 bg-black  font-thin hover:from-slate-800 hover:to-slate-900 text-white  font-medium  rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 tracking-wide"
+        >
+          Submit Case Details
+        </Button></div>
+            
           </CardContent>
         </Card>
 
-        <Button
-          type="submit"
-          variant="default"
-          className=" -mt-4 md:-mt-0 w-full py-2 md:py-6 bg-blue-700 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-blue-900 focus:ring-2 focus:ring-blue-800 focus:ring-opacity-50"
-        >
-          Submit Case
-        </Button>
+        
       </form>
     </div>
   );

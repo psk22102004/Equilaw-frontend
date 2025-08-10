@@ -37,6 +37,10 @@ const App = () => {
           element: <Login />, // Here after login navigate to /user/:id
         },
         {
+          path: "home",
+          element: <Dashboard3 />, // Here after login navigate to /user/:id
+        },
+        {
           path: "signup",
           element: <Signup />, // Here after signup navigate to /user/:id
         },

@@ -81,7 +81,7 @@ const HomePage = () => {
         <Navbar
           title="/new-logo.svg"
           navitem1="Home"
-          navLink1="/"
+          navLink1="/user/home"
           navitem2="About"
           navLink2="#"
           navitem3="Services"
